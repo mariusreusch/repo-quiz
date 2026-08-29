@@ -14,17 +14,9 @@
   <div class="wrap topbar-inner">
     <button class="brand" id="brand" type="button">
       <span class="brand-mark">⇄</span>
-      <span class="brand-text">
-        <strong>Repo Trading Quiz</strong>
-        <small id="brand-sub">Swiss repo &amp; collateral market</small>
-      </span>
+      <strong>Repo Trading Quiz</strong>
     </button>
-    <nav class="topnav">
-      <button type="button" data-nav="home">Modes</button>
-      <button type="button" data-nav="stats">Progress</button>
-      <button type="button" data-nav="sources">Sources</button>
-      <button type="button" id="theme-toggle" class="icon-btn" title="Switch theme" aria-label="Switch theme">◐</button>
-    </nav>
+    <button type="button" id="theme-toggle" class="icon-btn" title="Switch theme" aria-label="Switch theme">◐</button>
   </div>
 </header>
 
@@ -48,17 +40,15 @@
 
   <!-- ───────────────────────── home ───────────────────────── -->
   <section id="view-home" class="view hidden">
-    <div class="hero">
-      <h1>Build your repo domain knowledge</h1>
-      <p class="lede" id="hero-lede"></p>
-      <div class="hero-stats" id="hero-stats"></div>
+    <div class="mode-list" id="mode-list"></div>
+    <div class="home-foot">
+      <p class="home-meta muted" id="home-meta"></p>
+      <div class="home-links">
+        <button type="button" data-nav="stats">Your progress</button>
+        <span aria-hidden="true">·</span>
+        <button type="button" data-nav="sources">Sources</button>
+      </div>
     </div>
-
-    <h2 class="section-title">Game modes</h2>
-    <div class="mode-grid" id="mode-grid"></div>
-
-    <h2 class="section-title">Catalogue</h2>
-    <div class="topic-grid" id="topic-grid"></div>
   </section>
 
   <!-- ───────────────────────── setup ───────────────────────── -->
@@ -86,11 +76,6 @@
       <div class="field">
         <label class="field-label">Number of questions</label>
         <div class="chips" id="setup-count"></div>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Feedback</label>
-        <div class="chips" id="setup-feedback"></div>
       </div>
 
       <div class="setup-footer">
@@ -160,6 +145,7 @@
 
   <!-- ───────────────────────── stats ───────────────────────── -->
   <section id="view-stats" class="view hidden">
+    <button class="link-back" data-nav="home" type="button">← Back</button>
     <h1>Your progress</h1>
     <p class="lede">Stored locally in this browser only — nothing is sent anywhere.</p>
     <div class="stat-cards" id="stat-cards"></div>
@@ -177,6 +163,7 @@
 
   <!-- ───────────────────────── sources ───────────────────────── -->
   <section id="view-sources" class="view hidden">
+    <button class="link-back" data-nav="home" type="button">← Back</button>
     <h1>Sources</h1>
     <p class="lede">Every question cites where its content comes from. Where the source is the model's
        general market knowledge rather than one of the supplied documents, it says so.</p>

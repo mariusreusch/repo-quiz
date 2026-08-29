@@ -28,13 +28,14 @@ Difficulty is graded **Foundational (1) · Practitioner (2) · Advanced (3)**.
 | Mode | What it does |
 |---|---|
 | **Quick Five** | Five random questions across all topics and difficulties |
-| **Topic Round** | Drill one topic, optionally narrowed to a single subtopic |
-| **Exam Simulation** | 40 questions, 30-minute timer, feedback at the end, 70% pass mark |
-| **Sudden Death** | Keep going until the first wrong answer; best streak is remembered |
-| **Time Attack** | Three minutes, as many correct answers as possible |
+| **Topic Round** | Drill one topic, optionally narrowed to a subtopic, with a difficulty filter |
 | **Weak Spots** | Questions you last got wrong, topped up with ones you have never seen |
 | **Daily Challenge** | Ten questions, deterministic for the calendar date |
-| **Custom Round** | Any combination of topics, subtopics, difficulties, length and feedback style |
+| **Sudden Death** | Keep going until the first wrong answer; best streak is remembered |
+| **Time Attack** | Three minutes, as many correct answers as possible |
+
+The home screen is just the mode list — pick one and go. Progress and sources sit behind
+quiet links at the bottom. After a round you can immediately replay the questions you missed.
 
 Every answer shows an explanation and cites its sources. Keyboard: <kbd>1</kbd>–<kbd>4</kbd>
 to answer, <kbd>Enter</kbd> to continue, <kbd>Esc</kbd> to end a round.

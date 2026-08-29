@@ -12,46 +12,44 @@ const DIFF_NAME = { 1: "Foundational", 2: "Practitioner", 3: "Advanced" };
 /* ── game modes ──────────────────────────────────────── */
 const MODES = {
   quick: {
-    icon: "⚡", name: "Quick Five", tag: "5 questions · ~2 min",
-    desc: "Five random questions across every topic and difficulty. The warm-up round.",
+    icon: "⚡", name: "Quick Five",
+    desc: "Five random questions, mixed difficulty",
     count: 5, feedback: "immediate"
   },
   topic: {
-    icon: "◆", name: "Topic Round", tag: "pick a topic",
-    desc: "Drill one topic — or one subtopic — until it sticks. You choose length and difficulty.",
-    setup: "topic"
-  },
-  exam: {
-    icon: "▣", name: "Exam Simulation", tag: "40 questions · 30 min",
-    desc: "Timed, no feedback until the end, pass mark 70%. The closest thing to being tested.",
-    count: 40, feedback: "end", seconds: 30 * 60, pass: 70
-  },
-  sudden: {
-    icon: "☠", name: "Sudden Death", tag: "until you slip",
-    desc: "Keep answering until you get one wrong. Your best streak is remembered.",
-    endless: true, stopOnWrong: true, feedback: "immediate"
-  },
-  timeattack: {
-    icon: "⏱", name: "Time Attack", tag: "3 minutes",
-    desc: "As many correct answers as you can manage before the clock runs out.",
-    endless: true, seconds: 180, feedback: "immediate"
+    icon: "◆", name: "Topic Round",
+    desc: "Drill one topic or subtopic",
+    setup: true
   },
   weak: {
-    icon: "◎", name: "Weak Spots", tag: "15 questions · adaptive",
-    desc: "Questions you have got wrong before, topped up with ones you have never seen.",
+    icon: "◎", name: "Weak Spots",
+    desc: "What you last got wrong, plus what you have not seen",
     count: 15, feedback: "immediate", pick: "weak"
   },
   daily: {
-    icon: "◷", name: "Daily Challenge", tag: "10 questions · same for today",
-    desc: "A fixed set of ten for today's date. Come back tomorrow for a different one.",
-    count: 10, feedback: "end", seeded: true
+    icon: "◷", name: "Daily Challenge",
+    desc: "Ten questions, the same set all day",
+    count: 10, feedback: "immediate", seeded: true
   },
-  custom: {
-    icon: "⚙", name: "Custom Round", tag: "your rules",
-    desc: "Combine any topics, subtopics and difficulty levels into a round of your own size.",
-    setup: "custom"
+  sudden: {
+    icon: "☠", name: "Sudden Death",
+    desc: "Keep going until the first wrong answer",
+    endless: true, stopOnWrong: true, feedback: "immediate"
+  },
+  timeattack: {
+    icon: "⏱", name: "Time Attack",
+    desc: "As many as you can in three minutes",
+    endless: true, seconds: 180, feedback: "immediate"
+  },
+  review: {
+    icon: "↻", name: "Review Round",
+    desc: "The questions you just missed",
+    hidden: true, feedback: "immediate"
   }
 };
+
+/* Modes retired from the menu — kept so older run history still reads properly. */
+const LEGACY_MODE_NAMES = { exam: "Exam Simulation", custom: "Custom Round" };
 
 /* ── state ───────────────────────────────────────────── */
 const S = {
@@ -122,7 +120,6 @@ const fmtClock = ms => {
 const VIEWS = ["loading", "error", "home", "setup", "quiz", "result", "stats", "sources"];
 function show(name) {
   VIEWS.forEach(v => $(`#view-${v}`).classList.toggle("hidden", v !== name));
-  $$(".topnav [data-nav]").forEach(b => b.classList.toggle("active", b.dataset.nav === name));
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
 }
 function navigate(name) {
@@ -159,7 +156,6 @@ async function boot() {
   }
   S.data.questions.forEach(q => S.byId.set(q.id, q));
   $("#footer-disclaimer").textContent = S.data.meta.disclaimer;
-  $("#brand-sub").textContent = S.data.meta.subtitle;
   navigate("home");
 }
 
@@ -171,60 +167,38 @@ function applyTheme(t) {
 /* ── home ────────────────────────────────────────────── */
 function renderHome() {
   const qs = S.data.questions;
-  const answered = Object.values(S.stats.questions).filter(s => s.seen > 0).length;
-  const totalSeen = Object.values(S.stats.questions).reduce((n, s) => n + s.seen, 0);
-  const totalRight = Object.values(S.stats.questions).reduce((n, s) => n + s.correct, 0);
+  const subtopicCount = new Set(qs.map(q => q.topic + "/" + q.subtopic)).size;
 
-  $("#hero-lede").textContent =
-    `${qs.length} questions across ${S.data.topics.length} topics and ${new Set(qs.map(q => q.topic + "/" + q.subtopic)).size} subtopics, ` +
-    `at three difficulty levels — from what a repo actually is through to CO:RE contract types and Basel mechanics.`;
-
-  $("#hero-stats").replaceChildren(
-    el("span", { class: "hero-stat", html: `<b>${answered}</b> / ${qs.length} questions seen` }),
-    el("span", { class: "hero-stat", html: `<b>${pct(totalRight, totalSeen)}%</b> lifetime accuracy` }),
-    el("span", { class: "hero-stat", html: `<b>${S.stats.bestStreak}</b> best streak` }),
-    el("span", { class: "hero-stat", html: `<b>${S.stats.runs.length}</b> rounds played` })
-  );
-
-  const doneToday = !!S.stats.daily[todayKey()];
-  $("#mode-grid").replaceChildren(...Object.entries(MODES).map(([key, m]) => {
-    let tag = m.tag;
-    if (key === "daily" && doneToday) {
-      const d = S.stats.daily[todayKey()];
-      tag = `done today · ${d.correct}/${d.total}`;
-    }
-    if (key === "sudden" && S.stats.bestStreak) tag = `best streak: ${S.stats.bestStreak}`;
-    if (key === "weak") {
-      const n = weakPool().length;
-      tag = n ? `${n} to work on` : "nothing pending — nice";
-    }
-    return el("button", {
-      class: "mode-card", type: "button",
-      "data-done": key === "daily" && doneToday ? "1" : "0",
-      onclick: () => startMode(key)
+  $("#mode-list").replaceChildren(...Object.entries(MODES)
+    .filter(([, m]) => !m.hidden)
+    .map(([key, m]) => el("button", {
+      class: "mode-row", type: "button", onclick: () => startMode(key)
     }, [
       el("span", { class: "mode-icon", text: m.icon }),
-      el("span", { class: "mode-name", text: m.name }),
-      el("span", { class: "mode-desc", text: m.desc }),
-      el("span", { class: "mode-tag", text: tag })
-    ]);
-  }));
-
-  $("#topic-grid").replaceChildren(...S.data.topics.map(t => {
-    const list = qs.filter(q => q.topic === t.id);
-    const seen = list.filter(q => (S.stats.questions[q.id] || {}).seen).length;
-    const right = list.reduce((n, q) => n + ((S.stats.questions[q.id] || {}).correct || 0), 0);
-    const tries = list.reduce((n, q) => n + ((S.stats.questions[q.id] || {}).seen || 0), 0);
-    return el("button", { class: "topic-card", type: "button", onclick: () => openSetup("topic", t.id) }, [
-      el("h3", { text: t.name }),
-      el("p", { text: t.description }),
-      el("div", { class: "topic-meta" }, [
-        el("span", { text: `${list.length} questions · ${t.subtopics.length} subtopics` }),
-        el("span", { text: tries ? `${pct(right, tries)}% correct` : "not started" })
+      el("span", { class: "mode-body" }, [
+        el("span", { class: "mode-name", text: m.name }),
+        el("span", { class: "mode-desc", text: m.desc })
       ]),
-      el("div", { class: "topic-bar" }, [el("span", { style: `width:${pct(seen, list.length)}%` })])
-    ]);
-  }));
+      el("span", { class: "mode-meta", text: modeMeta(key) }),
+      el("span", { class: "mode-go", "aria-hidden": "true", text: "›" })
+    ])));
+
+  $("#home-meta").textContent =
+    `${qs.length} questions · ${S.data.topics.length} topics · ${subtopicCount} subtopics`;
+}
+
+/* Short status line on the right of each mode row — empty when there is nothing to say. */
+function modeMeta(key) {
+  if (key === "daily") {
+    const d = S.stats.daily[todayKey()];
+    return d ? `${d.correct}/${d.total} today` : "";
+  }
+  if (key === "sudden") return S.stats.bestStreak ? `best ${S.stats.bestStreak}` : "";
+  if (key === "weak") {
+    const n = weakPool().length;
+    return n ? `${n} pending` : "";
+  }
+  return "";
 }
 
 /* ── question selection ──────────────────────────────── */
@@ -262,8 +236,7 @@ function pickQuestions(mode, cfg = {}) {
 
 /* ── run lifecycle ───────────────────────────────────── */
 function startMode(key) {
-  const m = MODES[key];
-  if (m.setup) { openSetup(m.setup, null); return; }
+  if (MODES[key].setup) { openSetup(); return; }
   startRun(key, {});
 }
 
@@ -456,9 +429,6 @@ function renderResult(reason) {
   } else if (reason === "time") {
     title = `Time up — ${correct} correct`;
     lede = `You answered ${total} question${total === 1 ? "" : "s"} in ${fmtClock(Date.now() - r.startedAt)}.`;
-  } else if (m.pass) {
-    title = p >= m.pass ? "Pass" : "Not yet a pass";
-    lede = `Pass mark is ${m.pass}%. You scored ${p}% in ${fmtClock(Date.now() - r.startedAt)}.`;
   } else {
     title = p >= 80 ? "Strong round" : p >= 50 ? "Solid, with gaps" : "Worth another pass";
     lede = `${correct} of ${total} correct in ${fmtClock(Date.now() - r.startedAt)}. The review below shows every answer with its explanation and source.`;
@@ -469,7 +439,7 @@ function renderResult(reason) {
   const missed = r.answers.filter(a => !a.correct).map(a => a.id);
   const wrongBtn = $("#result-wrong");
   wrongBtn.classList.toggle("hidden", missed.length === 0);
-  wrongBtn.onclick = () => startRun("custom", { ids: missed, count: missed.length, feedback: "immediate" });
+  wrongBtn.onclick = () => startRun("review", { ids: missed, count: missed.length });
   $("#result-again").onclick = () => startRun(r.mode, r.cfg);
 
   // per-topic breakdown
@@ -519,22 +489,8 @@ function bdRow(name, c, n) {
 }
 
 /* ── setup screen ────────────────────────────────────── */
-function openSetup(kind, topicId) {
-  const single = kind === "topic";
-  S.setup = {
-    kind, single,
-    topics: topicId ? [topicId] : [],
-    subtopics: [],
-    difficulties: [],
-    count: single ? 10 : 20,
-    feedback: "immediate"
-  };
-  $("#setup-title").textContent = single ? "Topic round" : "Custom round";
-  $("#setup-lede").textContent = single
-    ? "Pick one topic, then narrow it to a subtopic if you want to drill something specific."
-    : "Mix any topics, subtopics and difficulty levels into a round of your own.";
-  $("#field-topic").querySelector(".field-label").innerHTML =
-    single ? "Topic" : `Topics <span class="muted">— none selected means all</span>`;
+function openSetup() {
+  S.setup = { topics: [], subtopics: [], difficulties: [], count: 10 };
   renderSetup();
   show("setup");
 }
@@ -544,9 +500,8 @@ function renderSetup() {
 
   $("#setup-topics").replaceChildren(...S.data.topics.map(t =>
     chip(t.name, c.topics.includes(t.id), () => {
-      if (c.single) { c.topics = c.topics[0] === t.id ? [] : [t.id]; c.subtopics = []; }
-      else toggle(c.topics, t.id);
-      c.subtopics = c.subtopics.filter(s => availableSubtopics().includes(s));
+      c.topics = c.topics[0] === t.id ? [] : [t.id];
+      c.subtopics = [];
       renderSetup();
     }, S.data.questions.filter(q => q.topic === t.id).length)
   ));
@@ -568,17 +523,11 @@ function renderSetup() {
     chip(n === "all" ? `All (${avail})` : String(n), c.count === n, () => { c.count = n; renderSetup(); })
   ));
 
-  $("#setup-feedback").replaceChildren(
-    chip("Show after each question", c.feedback === "immediate", () => { c.feedback = "immediate"; renderSetup(); }),
-    chip("Show at the end only", c.feedback === "end", () => { c.feedback = "end"; renderSetup(); })
-  );
-
   const n = c.count === "all" ? avail : Math.min(avail, c.count);
   $("#setup-available").textContent = `${avail} question${avail === 1 ? "" : "s"} match — this round will use ${n}.`;
   $("#setup-start").disabled = avail === 0;
-  $("#setup-start").onclick = () => startRun("custom", {
-    topics: c.topics, subtopics: c.subtopics, difficulties: c.difficulties,
-    count: c.count, feedback: c.feedback
+  $("#setup-start").onclick = () => startRun("topic", {
+    topics: c.topics, subtopics: c.subtopics, difficulties: c.difficulties, count: c.count
   });
 }
 
@@ -640,7 +589,7 @@ function renderStats() {
 
   $("#runs").replaceChildren(...(S.stats.runs.length
     ? S.stats.runs.slice(0, 12).map(r => el("div", { class: "run-row" }, [
-        el("span", { text: MODES[r.mode]?.name || r.mode }),
+        el("span", { text: MODES[r.mode]?.name || LEGACY_MODE_NAMES[r.mode] || r.mode }),
         el("span", { class: "run-meta", text: `${r.correct}/${r.total} · ${pct(r.correct, r.total)}% · ${new Date(r.ts).toLocaleString()}` })
       ]))
     : [el("p", { class: "muted", text: "No rounds played yet." })]));
