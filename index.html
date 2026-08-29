@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repo Trading Quiz</title>
+<meta name="description" content="A self-study quiz on repo trading, collateral management and the Swiss repo market infrastructure.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⇄</text></svg>">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <button class="brand" id="brand" type="button">
+      <span class="brand-mark">⇄</span>
+      <span class="brand-text">
+        <strong>Repo Trading Quiz</strong>
+        <small id="brand-sub">Swiss repo &amp; collateral market</small>
+      </span>
+    </button>
+    <nav class="topnav">
+      <button type="button" data-nav="home">Modes</button>
+      <button type="button" data-nav="stats">Progress</button>
+      <button type="button" data-nav="sources">Sources</button>
+      <button type="button" id="theme-toggle" class="icon-btn" title="Switch theme" aria-label="Switch theme">◐</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+
+  <!-- ───────────────────────── loading / error ───────────────────────── -->
+  <section id="view-loading" class="view">
+    <p class="muted">Loading question catalogue…</p>
+  </section>
+
+  <section id="view-error" class="view hidden">
+    <div class="panel panel-warn">
+      <h2>Could not load the question catalogue</h2>
+      <p id="error-detail" class="muted"></p>
+      <p>If you opened <code>index.html</code> directly from disk, your browser blocks reading
+         <code>data/questions.json</code>. Serve the folder over HTTP instead:</p>
+      <pre><code>python3 -m http.server 8000
+# then open http://localhost:8000</code></pre>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── home ───────────────────────── -->
+  <section id="view-home" class="view hidden">
+    <div class="hero">
+      <h1>Build your repo domain knowledge</h1>
+      <p class="lede" id="hero-lede"></p>
+      <div class="hero-stats" id="hero-stats"></div>
+    </div>
+
+    <h2 class="section-title">Game modes</h2>
+    <div class="mode-grid" id="mode-grid"></div>
+
+    <h2 class="section-title">Catalogue</h2>
+    <div class="topic-grid" id="topic-grid"></div>
+  </section>
+
+  <!-- ───────────────────────── setup ───────────────────────── -->
+  <section id="view-setup" class="view hidden">
+    <button class="link-back" data-nav="home" type="button">← Back to modes</button>
+    <h1 id="setup-title">Round setup</h1>
+    <p class="lede" id="setup-lede"></p>
+
+    <div class="panel setup-panel">
+      <div class="field" id="field-topic">
+        <label class="field-label">Topic</label>
+        <div class="chips" id="setup-topics"></div>
+      </div>
+
+      <div class="field" id="field-subtopic">
+        <label class="field-label">Subtopic <span class="muted">— optional</span></label>
+        <div class="chips" id="setup-subtopics"></div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Difficulty</label>
+        <div class="chips" id="setup-difficulty"></div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Number of questions</label>
+        <div class="chips" id="setup-count"></div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Feedback</label>
+        <div class="chips" id="setup-feedback"></div>
+      </div>
+
+      <div class="setup-footer">
+        <p class="muted" id="setup-available"></p>
+        <button class="btn btn-primary" id="setup-start" type="button">Start round</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── quiz ───────────────────────── -->
+  <section id="view-quiz" class="view hidden">
+    <div class="quiz-head">
+      <div class="quiz-head-left">
+        <span class="pill" id="quiz-mode"></span>
+        <span class="muted" id="quiz-counter"></span>
+      </div>
+      <div class="quiz-head-right">
+        <span class="pill pill-quiet" id="quiz-score"></span>
+        <span class="pill pill-quiet hidden" id="quiz-timer"></span>
+        <button class="icon-btn" id="quiz-quit" type="button" title="End round">✕</button>
+      </div>
+    </div>
+
+    <div class="progress"><div class="progress-bar" id="quiz-progress"></div></div>
+
+    <article class="question-card">
+      <div class="q-meta">
+        <span class="tag" id="q-topic"></span>
+        <span class="tag tag-quiet" id="q-subtopic"></span>
+        <span class="tag tag-diff" id="q-difficulty"></span>
+      </div>
+      <h1 class="q-text" id="q-text"></h1>
+      <div class="options" id="q-options"></div>
+      <div class="feedback hidden" id="q-feedback"></div>
+    </article>
+
+    <div class="quiz-foot">
+      <p class="hint muted">Keys: <kbd>1</kbd>–<kbd>4</kbd> to answer · <kbd>Enter</kbd> to continue</p>
+      <button class="btn btn-primary hidden" id="q-next" type="button">Next</button>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── result ───────────────────────── -->
+  <section id="view-result" class="view hidden">
+    <div class="result-head">
+      <div class="score-ring" id="score-ring">
+        <span class="score-pct" id="score-pct"></span>
+        <span class="score-sub" id="score-sub"></span>
+      </div>
+      <div class="result-copy">
+        <h1 id="result-title"></h1>
+        <p class="lede" id="result-lede"></p>
+        <div class="result-actions">
+          <button class="btn btn-primary" id="result-again" type="button">Play again</button>
+          <button class="btn" id="result-wrong" type="button">Retry the ones I missed</button>
+          <button class="btn btn-quiet" data-nav="home" type="button">Back to modes</button>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">By topic</h2>
+    <div class="breakdown" id="result-breakdown"></div>
+
+    <h2 class="section-title">Review</h2>
+    <div class="review" id="result-review"></div>
+  </section>
+
+  <!-- ───────────────────────── stats ───────────────────────── -->
+  <section id="view-stats" class="view hidden">
+    <h1>Your progress</h1>
+    <p class="lede">Stored locally in this browser only — nothing is sent anywhere.</p>
+    <div class="stat-cards" id="stat-cards"></div>
+
+    <h2 class="section-title">Mastery by topic</h2>
+    <div class="mastery" id="mastery"></div>
+
+    <h2 class="section-title">Recent rounds</h2>
+    <div class="runs" id="runs"></div>
+
+    <div class="danger-zone">
+      <button class="btn btn-quiet" id="reset-stats" type="button">Reset all progress</button>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── sources ───────────────────────── -->
+  <section id="view-sources" class="view hidden">
+    <h1>Sources</h1>
+    <p class="lede">Every question cites where its content comes from. Where the source is the model's
+       general market knowledge rather than one of the supplied documents, it says so.</p>
+    <div class="source-list" id="source-list"></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p id="footer-disclaimer" class="muted"></p>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
