@@ -3,7 +3,7 @@
     "title": "Repo Trading Quiz",
     "subtitle": "Domain knowledge for the Swiss repo and collateral market",
     "version": "1.0.0",
-    "questionCount": 183,
+    "questionCount": 230,
     "disclaimer": "Study material, provided without warranty. Not legal, tax or investment advice. Market conventions, product specifications and regulation change - always check the primary source (SIX, SNB, ICMA, FINMA) before relying on anything here professionally."
   },
   "sources": {
@@ -67,6 +67,7 @@
         "Accounting",
         "Definitions & Roles",
         "Income & Ownership",
+        "Instruments & Terminology",
         "Legal & Economic Nature"
       ]
     },
@@ -110,6 +111,7 @@
       "name": "Swiss Market Infrastructure",
       "description": "The Swiss Value Chain, SIX SIS, SIC settlement and SARON.",
       "subtopics": [
+        "Custody & Post-Trade",
         "SARON & Benchmarks",
         "SIX SIS & Settlement",
         "Swiss Value Chain"
@@ -287,6 +289,137 @@
       ]
     },
     {
+      "id": "q184",
+      "topic": "fundamentals",
+      "subtopic": "Definitions & Roles",
+      "difficulty": 1,
+      "question": "Which of the following is NOT a feature of a classic repo?",
+      "options": [
+        "The seller gives up all economic exposure to the security",
+        "Legal title to the securities passes to the buyer",
+        "The repurchase price is fixed when the trade is struck",
+        "The seller keeps the market risk of the collateral"
+      ],
+      "answer": 0,
+      "explanation": "A repo transfers legal title but not economic exposure: price moves on the collateral stay with the seller, who takes the security back at a price fixed at the outset. That combination is what makes a repo a secured loan rather than a sale.",
+      "sources": [
+        "pretrained",
+        "icma-gmra"
+      ]
+    },
+    {
+      "id": "q185",
+      "topic": "fundamentals",
+      "subtopic": "Definitions & Roles",
+      "difficulty": 1,
+      "question": "A corporate treasury invests CHF 50 million for one week against government bonds. Which side of the repo is it on?",
+      "options": [
+        "The reverse repo side — cash lender and collateral buyer",
+        "The repo side — cash borrower and collateral seller",
+        "Neither; this is a securities lending trade",
+        "It depends on whether the bonds are Swiss"
+      ],
+      "answer": 0,
+      "explanation": "Whoever puts cash out and takes securities in is doing a reverse repo. The label follows the direction of the cash, not the type of the collateral or the identity of the parties.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q186",
+      "topic": "fundamentals",
+      "subtopic": "Definitions & Roles",
+      "difficulty": 1,
+      "question": "In a repo, what exactly is the 'collateral'?",
+      "options": [
+        "The securities sold to the cash lender on the purchase date and bought back on the repurchase date",
+        "The cash amount advanced by the lender",
+        "A guarantee issued by a third party such as a CCP",
+        "The margin held by the triparty agent as a fee reserve"
+      ],
+      "answer": 0,
+      "explanation": "Collateral is the asset that secures the exposure. In repo it is the securities themselves, transferred outright rather than pledged, which is why the cash lender can sell them immediately if the borrower defaults.",
+      "sources": [
+        "six-repo-spec",
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q187",
+      "topic": "fundamentals",
+      "subtopic": "Definitions & Roles",
+      "difficulty": 1,
+      "question": "What is the near leg of a repo?",
+      "options": [
+        "The opening settlement on the purchase date: cash to the borrower, collateral to the lender",
+        "The final settlement, when the collateral is returned",
+        "The point at which the repo rate is fixed",
+        "The daily margin exchange"
+      ],
+      "answer": 0,
+      "explanation": "The near leg starts the trade on the purchase date. The nearer of the two settlement dates gives it its name.",
+      "sources": [
+        "pretrained",
+        "six-repo-spec"
+      ]
+    },
+    {
+      "id": "q188",
+      "topic": "fundamentals",
+      "subtopic": "Definitions & Roles",
+      "difficulty": 1,
+      "question": "What is the far leg of a repo?",
+      "options": [
+        "The closing settlement on the repurchase date: collateral back to the seller, repurchase price back to the lender",
+        "The opening exchange of cash against securities",
+        "The substitution of one security for another",
+        "The moment a margin call is settled"
+      ],
+      "answer": 0,
+      "explanation": "The far leg unwinds the trade at the repurchase price, which is the original cash amount plus accrued repo interest. A failure on the far leg is particularly awkward: the borrower has paid but has not received its collateral back.",
+      "sources": [
+        "pretrained",
+        "six-repo-spec"
+      ]
+    },
+    {
+      "id": "q189",
+      "topic": "fundamentals",
+      "subtopic": "Definitions & Roles",
+      "difficulty": 1,
+      "question": "What is meant by the 'counterparty' to a repo trade?",
+      "options": [
+        "The other party to the contract, which owes and is owed obligations under it",
+        "The agent that allocates the collateral",
+        "The venue on which the trade was executed",
+        "The issuer of the security used as collateral"
+      ],
+      "answer": 0,
+      "explanation": "Every bilateral trade has exactly two counterparties. Where a CCP is involved it becomes the counterparty to both original parties through novation, which is why counterparty exposure then sits with the CCP.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q190",
+      "topic": "fundamentals",
+      "subtopic": "Definitions & Roles",
+      "difficulty": 1,
+      "question": "What is counterparty risk in a repo?",
+      "options": [
+        "The risk that the other party fails to perform, leaving a shortfall once the collateral has been realised",
+        "The risk that the collateral price falls during the trade",
+        "The risk of sending a wrong settlement instruction",
+        "The risk that the repo rate moves against you"
+      ],
+      "answer": 0,
+      "explanation": "Collateral does not remove counterparty risk, it caps it. What remains is the gap between the claim and what the collateral actually fetches — which is why haircuts, daily margining and a short margin period of risk matter.",
+      "sources": [
+        "pretrained",
+        "basel"
+      ]
+    },
+    {
       "id": "q008",
       "topic": "fundamentals",
       "subtopic": "Definitions & Roles",
@@ -392,6 +525,79 @@
       "explanation": "The repurchase price is fixed and independent of the collateral's price path. Gains and losses stay with the seller; the buyer protects itself against value loss through haircut and margining.",
       "sources": [
         "pretrained"
+      ]
+    },
+    {
+      "id": "q191",
+      "topic": "fundamentals",
+      "subtopic": "Instruments & Terminology",
+      "difficulty": 1,
+      "question": "What is a bond?",
+      "options": [
+        "A debt instrument under which the issuer owes the holder defined interest payments and repayment of principal at maturity",
+        "A share in the ownership and profits of a company",
+        "A contract to exchange interest payments on a notional amount",
+        "A short-term deposit with a bank"
+      ],
+      "answer": 0,
+      "explanation": "A bondholder is a creditor, not an owner. That is why bonds rank ahead of equity in insolvency and why they are the natural collateral for secured funding.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q192",
+      "topic": "fundamentals",
+      "subtopic": "Instruments & Terminology",
+      "difficulty": 1,
+      "question": "Why is a bond described as a fixed-income asset?",
+      "options": [
+        "Because its payment schedule is contractually defined rather than discretionary",
+        "Because its market price never changes",
+        "Because its yield is guaranteed by the state",
+        "Because it can only be issued at a fixed rate of interest"
+      ],
+      "answer": 0,
+      "explanation": "'Fixed income' refers to the contractual nature of the cash flows, not to a fixed price or even a fixed coupon — floating rate notes are fixed income too. Prices still move with rates and credit spreads.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q193",
+      "topic": "fundamentals",
+      "subtopic": "Instruments & Terminology",
+      "difficulty": 1,
+      "question": "What is the fixed-income market?",
+      "options": [
+        "The market in which debt instruments — bonds and money market paper — are issued and traded",
+        "The market for equities with stable dividends",
+        "The market for interest rate derivatives only",
+        "The market in which central banks set policy rates"
+      ],
+      "answer": 0,
+      "explanation": "The repo market sits alongside it as the funding layer: fixed-income positions are largely financed in repo, so the two markets are operationally inseparable.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q194",
+      "topic": "fundamentals",
+      "subtopic": "Instruments & Terminology",
+      "difficulty": 1,
+      "question": "What is an ISIN?",
+      "options": [
+        "A twelve-character code that uniquely identifies a specific security internationally",
+        "A code identifying the legal entity issuing a security",
+        "A reference number assigned to an individual trade",
+        "An identifier for a settlement account at a CSD"
+      ],
+      "answer": 0,
+      "explanation": "ISIN answers 'which security'. The entity is identified by an LEI and the individual transaction by a UTI — three different identifiers that reporting systems constantly have to keep apart.",
+      "sources": [
+        "pretrained",
+        "sftr"
       ]
     },
     {
@@ -557,6 +763,63 @@
       ]
     },
     {
+      "id": "q195",
+      "topic": "pricing",
+      "subtopic": "Haircut & Margin Ratio",
+      "difficulty": 1,
+      "question": "What is a haircut in a repo?",
+      "options": [
+        "A percentage deduction from the collateral's market value, so less cash is advanced than the collateral is worth",
+        "A fee deducted from the repo interest",
+        "A reduction of the repo rate for high quality collateral",
+        "A discount granted to frequent counterparties"
+      ],
+      "answer": 0,
+      "explanation": "The haircut is the cash lender's cushion. It absorbs the price fall that could occur between a default and the sale of the collateral — nothing to do with the price of the money, which is the repo rate.",
+      "sources": [
+        "pretrained",
+        "icma-gmra"
+      ]
+    },
+    {
+      "id": "q196",
+      "topic": "pricing",
+      "subtopic": "Haircut & Margin Ratio",
+      "difficulty": 1,
+      "question": "What does 'margin' refer to in secured financing?",
+      "options": [
+        "The excess of collateral value over the cash exposure, and the transfers that maintain it",
+        "The profit a desk makes on a trade",
+        "The difference between the bid and the offer",
+        "The fee paid to the trading venue"
+      ],
+      "answer": 0,
+      "explanation": "Margin is protection, not profit. It is established at the outset as initial margin or a haircut, and maintained over the life of the trade through variation margin transfers.",
+      "sources": [
+        "pretrained",
+        "icma-gmra"
+      ]
+    },
+    {
+      "id": "q201",
+      "topic": "pricing",
+      "subtopic": "Haircut & Margin Ratio",
+      "difficulty": 1,
+      "question": "What is the difference between the clean price and the dirty price of a bond?",
+      "options": [
+        "The dirty price includes interest accrued since the last coupon; the clean price excludes it",
+        "The dirty price includes the haircut; the clean price does not",
+        "The clean price is the mid, the dirty price is the offer",
+        "The dirty price is the price after settlement costs"
+      ],
+      "answer": 0,
+      "explanation": "Bonds are usually quoted clean but settled dirty. Collateral must be valued at the dirty price — ignoring accrued interest leaves the cash lender quietly under-collateralised, and the gap grows as the coupon date approaches.",
+      "sources": [
+        "pretrained",
+        "six-otc-spec"
+      ]
+    },
+    {
       "id": "q023",
       "topic": "pricing",
       "subtopic": "Haircut & Margin Ratio",
@@ -611,6 +874,25 @@
       ]
     },
     {
+      "id": "q197",
+      "topic": "pricing",
+      "subtopic": "Haircut & Margin Ratio",
+      "difficulty": 2,
+      "question": "What is initial margin in a repo?",
+      "options": [
+        "The over-collateralisation agreed at the outset, expressed as collateral value divided by cash amount",
+        "Margin exchanged daily as prices move",
+        "A deposit lodged with the trading venue before trading",
+        "The minimum size of a trade"
+      ],
+      "answer": 0,
+      "explanation": "Initial margin and haircut are two ways of saying the same thing: an initial margin of 102% corresponds to a haircut of roughly 1.96%. Margin exchanged as prices move afterwards is variation margin.",
+      "sources": [
+        "icma-gmra",
+        "pretrained"
+      ]
+    },
+    {
       "id": "q026",
       "topic": "pricing",
       "subtopic": "Haircut & Margin Ratio",
@@ -642,6 +924,24 @@
       ],
       "answer": 0,
       "explanation": "The haircut covers the risk that the collateral loses value between default and liquidation. Volatile, illiquid, long-dated or lower-rated paper attracts bigger discounts.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q198",
+      "topic": "pricing",
+      "subtopic": "Margining",
+      "difficulty": 1,
+      "question": "What does it mean to mark a repo to market?",
+      "options": [
+        "Revaluing the collateral and the cash exposure at current market prices to see whether margin is due",
+        "Adjusting the repo rate to current market rates",
+        "Re-registering the collateral in the buyer's name",
+        "Reporting the trade to a trade repository"
+      ],
+      "answer": 0,
+      "explanation": "Marking to market is what turns a static contract into a managed exposure. Without daily revaluation, a collateral shortfall would only surface when it is too late to do anything about it.",
       "sources": [
         "pretrained"
       ]
@@ -701,6 +1001,25 @@
       ]
     },
     {
+      "id": "q199",
+      "topic": "pricing",
+      "subtopic": "Margining",
+      "difficulty": 2,
+      "question": "In a bilateral repo, which party can call for margin?",
+      "options": [
+        "Either party — whichever one is under-collateralised after revaluation",
+        "Only the cash lender, since it carries the credit risk",
+        "Only the cash borrower, since it owns the collateral economically",
+        "Neither; the triparty agent decides unilaterally"
+      ],
+      "answer": 0,
+      "explanation": "Margining is two-directional. If the collateral rises in value the seller is over-collateralised and can call margin back — a point often missed, and a real source of return for a collateral giver that manages it actively.",
+      "sources": [
+        "icma-gmra",
+        "pretrained"
+      ]
+    },
+    {
       "id": "q031",
       "topic": "pricing",
       "subtopic": "Margining",
@@ -715,6 +1034,25 @@
       "answer": 0,
       "explanation": "A margin transfer leaves the original trade untouched and settles the difference separately. Repricing terminates the old trade and re-opens it at a new purchase price — cleaner in the books, more operationally intensive.",
       "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q200",
+      "topic": "pricing",
+      "subtopic": "Repo Rate & Interest",
+      "difficulty": 1,
+      "question": "A repo is agreed at a repo rate of 1.75%. To which amount is that rate applied?",
+      "options": [
+        "The cash amount",
+        "The market value of the collateral",
+        "The nominal value of the collateral",
+        "The repurchase price"
+      ],
+      "answer": 0,
+      "explanation": "The repo rate prices the money. Applying it to the collateral value is a common beginner's error and would give the wrong interest whenever a haircut applies.",
+      "sources": [
+        "six-repo-spec",
         "pretrained"
       ]
     },
@@ -938,6 +1276,24 @@
       ]
     },
     {
+      "id": "q202",
+      "topic": "collateral",
+      "subtopic": "Baskets & Eligibility",
+      "difficulty": 2,
+      "question": "What does a basket definition actually specify?",
+      "options": [
+        "The eligibility rules — issuer types, ratings, currencies, maturities, haircuts and concentration limits — and who owns and maintains them",
+        "A fixed list of ISINs that never changes",
+        "The prices at which each security may be delivered",
+        "The counterparties permitted to trade the basket"
+      ],
+      "answer": 0,
+      "explanation": "Because a basket is a rule set rather than a list, its contents change as securities are issued, downgraded or redeemed. On CO:RE each basket has a named owner — the SNB, the ECB or SIX Repo AG — who defines those rules.",
+      "sources": [
+        "six-repo-spec"
+      ]
+    },
+    {
       "id": "q044",
       "topic": "collateral",
       "subtopic": "Baskets & Eligibility",
@@ -990,6 +1346,42 @@
       "explanation": "RtR determines whether the collateral taker may reuse the specified collateral; RoS determines whether the seller may substitute it for collateral of equal value and credit rating. Both are attributes of the contract type.",
       "sources": [
         "six-repo-spec"
+      ]
+    },
+    {
+      "id": "q208",
+      "topic": "collateral",
+      "subtopic": "Substitution & Reuse",
+      "difficulty": 2,
+      "question": "Under what condition may a collateral seller substitute the collateral it has delivered?",
+      "options": [
+        "Only where the contract type or agreement grants a right of substitution, and the replacement must be of equivalent value and credit quality",
+        "At any time and without restriction",
+        "Only with the prior approval of the supervisory authority",
+        "Only on the repurchase date"
+      ],
+      "answer": 0,
+      "explanation": "On CO:RE the right of substitution (RoS) is an explicit attribute of the contract type — some standard types grant it, others do not, so it is worth checking before assuming a security can be retrieved.",
+      "sources": [
+        "six-repo-spec"
+      ]
+    },
+    {
+      "id": "q209",
+      "topic": "collateral",
+      "subtopic": "Substitution & Reuse",
+      "difficulty": 2,
+      "question": "What is a recall in securities lending?",
+      "options": [
+        "The lender demands the return of the lent securities before the agreed end date, for instance in order to sell them",
+        "The borrower returns collateral it no longer needs",
+        "The CSD cancels a settlement instruction",
+        "A central bank withdraws eligibility from a security"
+      ],
+      "answer": 0,
+      "explanation": "Recall risk is why securities lending is not a reliable funding tool: the lender can pull the securities back. The repo equivalent of retrieving a specific security without ending the trade is substitution.",
+      "sources": [
+        "pretrained"
       ]
     },
     {
@@ -1049,6 +1441,44 @@
       ]
     },
     {
+      "id": "q205",
+      "topic": "collateral",
+      "subtopic": "Triparty",
+      "difficulty": 1,
+      "question": "What does TPA stand for in collateral management?",
+      "options": [
+        "Triparty agent",
+        "Trade processing application",
+        "Total portfolio allocation",
+        "Transaction pricing agreement"
+      ],
+      "answer": 0,
+      "explanation": "The TPA sits between the two parties operationally but never becomes a party to the trade: it allocates, values, substitutes and reports, while credit risk stays bilateral.",
+      "sources": [
+        "pretrained",
+        "six-repo-spec"
+      ]
+    },
+    {
+      "id": "q206",
+      "topic": "collateral",
+      "subtopic": "Triparty",
+      "difficulty": 1,
+      "question": "What is collateral allocation?",
+      "options": [
+        "Selecting specific securities from available inventory and assigning them to cover a specific exposure",
+        "Deciding how much cash to lend against a basket",
+        "Distributing margin calls between counterparties",
+        "Splitting a trade into settlement tranches"
+      ],
+      "answer": 0,
+      "explanation": "Allocation is where eligibility rules, concentration limits, haircuts and optimisation logic all meet. In triparty the agent runs it automatically and reallocates as values move.",
+      "sources": [
+        "six-repo-spec",
+        "pretrained"
+      ]
+    },
+    {
       "id": "q050",
       "topic": "collateral",
       "subtopic": "Triparty",
@@ -1101,6 +1531,61 @@
       "sources": [
         "pretrained",
         "six-repo-spec"
+      ]
+    },
+    {
+      "id": "q204",
+      "topic": "collateral",
+      "subtopic": "Triparty",
+      "difficulty": 2,
+      "question": "What is the 'long box' in triparty collateral management?",
+      "options": [
+        "The account holding a participant's available securities, from which the agent draws to allocate collateral",
+        "The list of trades still awaiting settlement",
+        "The account into which margin calls are paid",
+        "The record of securities received from counterparties"
+      ],
+      "answer": 0,
+      "explanation": "If the long box runs dry, automatic allocation stops and a collateral deficit appears — which is why inventory management upstream of the long box is a core treasury task.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q207",
+      "topic": "collateral",
+      "subtopic": "Triparty",
+      "difficulty": 2,
+      "question": "What is the key operational difference between a bilateral and a triparty repo?",
+      "options": [
+        "In triparty an agent selects, values and substitutes the collateral; bilaterally the two parties do all of it themselves",
+        "In triparty the agent guarantees settlement of the trade",
+        "Bilateral repos cannot be collateralised with baskets",
+        "Triparty repos are always centrally cleared"
+      ],
+      "answer": 0,
+      "explanation": "The difference is operational, not legal: the contract stays between the two parties, and so does the credit risk. Bilateral gives control over exactly which security moves; triparty gives scale.",
+      "sources": [
+        "pretrained",
+        "six-repo-spec"
+      ]
+    },
+    {
+      "id": "q203",
+      "topic": "collateral",
+      "subtopic": "Valuation & Optimisation",
+      "difficulty": 1,
+      "question": "What is a collateral pool?",
+      "options": [
+        "The aggregate of securities a participant makes available to cover its secured obligations",
+        "A joint account shared by several counterparties",
+        "The set of securities a CCP holds as its default fund",
+        "A basket owned by a central bank"
+      ],
+      "answer": 0,
+      "explanation": "Pooling matters because it decouples individual trades from individual securities: obligations are covered from the pool as a whole, which is what makes automated allocation and substitution possible.",
+      "sources": [
+        "pretrained"
       ]
     },
     {
@@ -1362,6 +1847,61 @@
       ]
     },
     {
+      "id": "q210",
+      "topic": "sixplatform",
+      "subtopic": "CO:RE Trading Model",
+      "difficulty": 1,
+      "question": "What is a request for offer (RfO)?",
+      "options": [
+        "A non-binding request sent to selected participants inviting them to offer a price",
+        "A binding order that must be executed",
+        "A published quote visible to the whole market",
+        "An instruction sent to the triparty agent"
+      ],
+      "answer": 0,
+      "explanation": "RfOs and quotes are both non-binding invitations; an order is the binding instrument. Whether the recipient set is the whole market or a restricted group also determines the fee and whether the data feeds Swiss reference rates.",
+      "sources": [
+        "six-repo-spec",
+        "six-pricelist"
+      ]
+    },
+    {
+      "id": "q212",
+      "topic": "sixplatform",
+      "subtopic": "CO:RE Trading Model",
+      "difficulty": 1,
+      "question": "What does a bid/offer spread represent?",
+      "options": [
+        "The gap between the price at which a market maker will buy and the price at which it will sell",
+        "The difference between the GC rate and the special rate",
+        "The haircut applied to the collateral",
+        "The fee charged by the trading venue"
+      ],
+      "answer": 0,
+      "explanation": "The spread compensates the market maker for holding risk and standing ready to trade in either direction. In repo the two sides are quoted as rates, so the spread is expressed in basis points.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q213",
+      "topic": "sixplatform",
+      "subtopic": "CO:RE Trading Model",
+      "difficulty": 1,
+      "question": "What is a two-way quote?",
+      "options": [
+        "A quote showing both a bid and an offer, so the recipient can trade in either direction",
+        "A quote sent to exactly two participants",
+        "A quote valid for two business days",
+        "A quote that must be answered within two minutes"
+      ],
+      "answer": 0,
+      "explanation": "Being asked for a two-way price without revealing your direction is standard practice: it stops the quoting party from skewing the price against you once it knows which way you want to go.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
       "id": "q067",
       "topic": "sixplatform",
       "subtopic": "CO:RE Trading Model",
@@ -1399,6 +1939,44 @@
       ]
     },
     {
+      "id": "q211",
+      "topic": "sixplatform",
+      "subtopic": "CO:RE Trading Model",
+      "difficulty": 2,
+      "question": "In a trade resulting from a quote, which party is the non-aggressor?",
+      "options": [
+        "The participant that posted the quote",
+        "The participant that responded to it",
+        "Both parties are non-aggressors",
+        "Whichever party lends the cash"
+      ],
+      "answer": 0,
+      "explanation": "Posting is passive, responding is aggressive. The distinction is not academic: aggressor and non-aggressor pay different transaction fees, and market making to the whole market is the cheapest execution type.",
+      "sources": [
+        "six-repo-spec",
+        "six-pricelist"
+      ]
+    },
+    {
+      "id": "q214",
+      "topic": "sixplatform",
+      "subtopic": "CO:RE Trading Model",
+      "difficulty": 2,
+      "question": "What is an order book?",
+      "options": [
+        "A record of outstanding buy and sell interest in an instrument, ranked by price and time",
+        "A ledger of all settled trades",
+        "The list of contract types available on a venue",
+        "A participant's internal record of its positions"
+      ],
+      "answer": 0,
+      "explanation": "Worth knowing what CO:RE is not: for the CH Repo market contract types central trading is not allowed, so trading runs through quotes, requests for offer and addressed orders rather than a central anonymous order book.",
+      "sources": [
+        "six-repo-spec",
+        "pretrained"
+      ]
+    },
+    {
       "id": "q069",
       "topic": "sixplatform",
       "subtopic": "CO:RE Trading Model",
@@ -1414,6 +1992,25 @@
       "explanation": "Using one pricing source for both securities valuation and FX conversion keeps triparty allocation, margining and fee calculation internally consistent.",
       "sources": [
         "six-repo-spec"
+      ]
+    },
+    {
+      "id": "q215",
+      "topic": "sixplatform",
+      "subtopic": "Contract Types",
+      "difficulty": 1,
+      "question": "What does 'intraday' mean for a repo contract type?",
+      "options": [
+        "Purchase and repurchase happen on the same business day, so the liquidity is provided and returned within the day",
+        "The repo has a maturity of one night",
+        "The repo rate is refixed several times a day",
+        "The collateral is revalued more than once a day"
+      ],
+      "answer": 0,
+      "explanation": "Intraday (IN) contract types bridge timing gaps between payments in the RTGS system. The SNB posts quotes in CHF IN and TIN, and for fee purposes an intraday trade is charged as if it had a one-day term.",
+      "sources": [
+        "six-repo-spec",
+        "six-pricelist"
       ]
     },
     {
@@ -1924,6 +2521,136 @@
       ]
     },
     {
+      "id": "q216",
+      "topic": "swissmarket",
+      "subtopic": "Custody & Post-Trade",
+      "difficulty": 1,
+      "question": "What does a custodian do?",
+      "options": [
+        "Holds securities in safekeeping for clients and administers them, including settlement, income collection and corporate actions",
+        "Trades securities on its own account for clients",
+        "Sets the eligibility criteria for collateral baskets",
+        "Guarantees the performance of trades it settles"
+      ],
+      "answer": 0,
+      "explanation": "A custodian is a service provider to its clients. It is distinct from a CSD, which is the central book-entry layer where securities ultimately live and where final settlement occurs.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q217",
+      "topic": "swissmarket",
+      "subtopic": "Custody & Post-Trade",
+      "difficulty": 1,
+      "question": "What is a central securities depository (CSD)?",
+      "options": [
+        "The institution where securities are held centrally in book-entry form and where settlement becomes final",
+        "A bank that lends securities to short sellers",
+        "The central counterparty for securities trades",
+        "A registry of legal entity identifiers"
+      ],
+      "answer": 0,
+      "explanation": "SIX SIS is the Swiss CSD. Because both the securities accounts and the link to the payment system sit in one place, a CHF repo can settle delivery versus payment in central bank money in a single process.",
+      "sources": [
+        "pretrained",
+        "six-repo-spec"
+      ]
+    },
+    {
+      "id": "q218",
+      "topic": "swissmarket",
+      "subtopic": "Custody & Post-Trade",
+      "difficulty": 1,
+      "question": "What does settlement mean?",
+      "options": [
+        "The final transfer of securities and cash that discharges the obligations arising from a trade",
+        "The agreement of price and size between two parties",
+        "The calculation of margin requirements",
+        "The reporting of a trade to a repository"
+      ],
+      "answer": 0,
+      "explanation": "Execution creates obligations; settlement extinguishes them. Finality is the point at which the transfer can no longer be unwound — which is exactly what makes DvP settlement in central bank money so valuable.",
+      "sources": [
+        "pretrained",
+        "six-otc-spec"
+      ]
+    },
+    {
+      "id": "q220",
+      "topic": "swissmarket",
+      "subtopic": "Custody & Post-Trade",
+      "difficulty": 1,
+      "question": "What does clearing cover?",
+      "options": [
+        "Everything between execution and settlement: confirmation, calculation of obligations, netting and risk management",
+        "The final exchange of securities against cash",
+        "The safekeeping of securities on behalf of clients",
+        "The publication of trade prices to the market"
+      ],
+      "answer": 0,
+      "explanation": "Clearing establishes what is owed; settlement delivers it. Where a CCP clears, it also novates the trade and becomes counterparty to both sides.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q219",
+      "topic": "swissmarket",
+      "subtopic": "Custody & Post-Trade",
+      "difficulty": 2,
+      "question": "What is a settlement instruction?",
+      "options": [
+        "The message telling a custodian or CSD what to deliver or receive, against which payment and on which date",
+        "The confirmation that a trade has been executed",
+        "The order sent to a counterparty to initiate a trade",
+        "The margin call issued after revaluation"
+      ],
+      "answer": 0,
+      "explanation": "Both sides instruct separately, and the instructions must match. Mismatched or late instructions are one of the most common causes of settlement fails — and under CSDR every fail carries a daily cash penalty.",
+      "sources": [
+        "pretrained",
+        "csdr"
+      ]
+    },
+    {
+      "id": "q221",
+      "topic": "swissmarket",
+      "subtopic": "Custody & Post-Trade",
+      "difficulty": 2,
+      "question": "What is netting?",
+      "options": [
+        "Offsetting mutual obligations so that only the net difference is delivered or paid",
+        "Splitting a large trade into smaller tranches",
+        "Allocating collateral across several counterparties",
+        "Reducing the haircut applied to a basket"
+      ],
+      "answer": 0,
+      "explanation": "Two distinct kinds matter in repo: settlement netting, which reduces the number and size of daily movements, and close-out netting, which collapses all trades into a single net claim on default. Only the latter reduces credit exposure.",
+      "sources": [
+        "pretrained",
+        "icma-gmra"
+      ]
+    },
+    {
+      "id": "q222",
+      "topic": "swissmarket",
+      "subtopic": "Custody & Post-Trade",
+      "difficulty": 2,
+      "question": "What is a corporate action?",
+      "options": [
+        "An event initiated by the issuer that affects the security, such as a coupon, dividend, redemption or merger",
+        "A decision by a counterparty to terminate a repo early",
+        "A regulatory measure imposed on a listed company",
+        "An instruction to substitute collateral"
+      ],
+      "answer": 0,
+      "explanation": "Corporate actions on collateral have to be handled while the security sits with someone else: income is passed back to the collateral giver as a manufactured payment, and a redemption removes the security from the pool and forces a substitution.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
       "id": "q098",
       "topic": "swissmarket",
       "subtopic": "SARON & Benchmarks",
@@ -2030,6 +2757,24 @@
       "explanation": "A transaction-based benchmark is only as robust as the data behind it. SIX's price list explicitly distinguishes which execution types contribute quotes and trades to Swiss reference rates.",
       "sources": [
         "six-pricelist",
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q223",
+      "topic": "swissmarket",
+      "subtopic": "SARON & Benchmarks",
+      "difficulty": 3,
+      "question": "Why did moving legacy contracts from CHF LIBOR to SARON require a spread adjustment?",
+      "options": [
+        "LIBOR was an unsecured term rate that embedded bank credit risk, while SARON is a secured overnight rate and therefore structurally lower",
+        "Because SARON is published in a different currency",
+        "Because SARON is calculated only once a month",
+        "Because SARON is set by the SNB rather than by the market"
+      ],
+      "answer": 0,
+      "explanation": "Swapping one rate for the other without adjustment would have transferred value between borrower and lender. A fixed spread adjustment based on the historical median difference bridges the gap between an unsecured term rate and a secured overnight rate.",
+      "sources": [
         "pretrained"
       ]
     },
@@ -2392,6 +3137,25 @@
       ]
     },
     {
+      "id": "q224",
+      "topic": "centralbank",
+      "subtopic": "SNB Operations",
+      "difficulty": 1,
+      "question": "What is the SNB policy rate?",
+      "options": [
+        "The rate with which the SNB communicates its monetary policy stance and to which it steers short-term secured money market rates",
+        "The rate at which the SNB lends to the Swiss Confederation",
+        "The average rate of all repo trades on CO:RE",
+        "The maximum rate banks may charge on mortgages"
+      ],
+      "answer": 0,
+      "explanation": "The policy rate is a signal plus a steering target. The SNB aims to keep secured money market rates, SARON above all, close to it — which is why the repo market is the transmission channel for Swiss monetary policy.",
+      "sources": [
+        "snb",
+        "pretrained"
+      ]
+    },
+    {
       "id": "q123",
       "topic": "centralbank",
       "subtopic": "SNB Operations",
@@ -2556,6 +3320,25 @@
       "sources": [
         "pretrained",
         "snb"
+      ]
+    },
+    {
+      "id": "q225",
+      "topic": "regulation",
+      "subtopic": "Basel III",
+      "difficulty": 1,
+      "question": "What does leverage mean for a bank's balance sheet?",
+      "options": [
+        "Funding assets with borrowed money, so total assets are large relative to equity",
+        "Holding assets in more than one currency",
+        "Taking directional positions in interest rates",
+        "Lending to counterparties with low credit ratings"
+      ],
+      "answer": 0,
+      "explanation": "Repo is a leverage machine: a bond can be bought and repoed out to fund most of its price, and the proceeds used again. The Basel leverage ratio caps this by measuring exposure without risk weights, which is why repo books consume balance sheet even when they carry little risk.",
+      "sources": [
+        "basel",
+        "pretrained"
       ]
     },
     {
@@ -2874,6 +3657,43 @@
       "explanation": "The reporting scope is very granular — roughly 155 fields across several tables — which makes data quality and reconciliation a continuous operational challenge.",
       "sources": [
         "sftr"
+      ]
+    },
+    {
+      "id": "q229",
+      "topic": "regulation",
+      "subtopic": "SFTR",
+      "difficulty": 2,
+      "question": "Can a counterparty delegate its SFTR reporting to someone else?",
+      "options": [
+        "Yes, reporting can be delegated, but legal responsibility for completeness and accuracy stays with the counterparty",
+        "No, reporting must always be done in-house",
+        "Yes, and responsibility transfers to the delegate as well",
+        "Only if the counterparty trades below a volume threshold"
+      ],
+      "answer": 0,
+      "explanation": "Delegation to a broker, agent or vendor is common practice and does not transfer liability. It is one of the main reasons firms reconcile their delegated reports against their own books.",
+      "sources": [
+        "sftr"
+      ]
+    },
+    {
+      "id": "q230",
+      "topic": "regulation",
+      "subtopic": "SFTR",
+      "difficulty": 2,
+      "question": "Which identifiers answer 'which legal entity', 'which security' and 'which transaction' respectively?",
+      "options": [
+        "LEI, ISIN and UTI",
+        "ISIN, LEI and UTI",
+        "UTI, ISIN and LEI",
+        "LEI, UTI and ISIN"
+      ],
+      "answer": 0,
+      "explanation": "Keeping the three apart is fundamental to any reporting stack: the LEI identifies the counterparty, the ISIN the instrument, and the UTI the individual trade — the last of which both parties must report identically for the reports to match.",
+      "sources": [
+        "sftr",
+        "pretrained"
       ]
     },
     {
@@ -3304,6 +4124,44 @@
       ]
     },
     {
+      "id": "q226",
+      "topic": "products",
+      "subtopic": "SFT Product Types",
+      "difficulty": 1,
+      "question": "What is securities lending?",
+      "options": [
+        "The temporary transfer of securities against collateral, remunerated by a lending fee, with an obligation to return equivalent securities",
+        "The outright sale of securities with no obligation to return them",
+        "A loan of cash secured by securities and priced as an interest rate",
+        "The pledging of securities to a central bank"
+      ],
+      "answer": 0,
+      "explanation": "Repo and securities lending are economically close and both are SFTs under SFTR. The visible differences are the pricing convention — a fee rather than an interest rate — and that collateral may be cash or securities.",
+      "sources": [
+        "pretrained",
+        "sftr"
+      ]
+    },
+    {
+      "id": "q227",
+      "topic": "products",
+      "subtopic": "SFT Product Types",
+      "difficulty": 1,
+      "question": "What is a sell/buy-back?",
+      "options": [
+        "A spot sale of securities combined with a separate agreement to buy them back forward at an agreed price",
+        "A repo in which the collateral is sold to a third party",
+        "The sale of a security followed by an option to repurchase it",
+        "A purchase of securities financed with a bank loan"
+      ],
+      "answer": 0,
+      "explanation": "Economically it does the same job as a repo. The structural difference is that it is built as two formally separate trades rather than one contract with two legs.",
+      "sources": [
+        "icma-gmra",
+        "pretrained"
+      ]
+    },
+    {
       "id": "q172",
       "topic": "products",
       "subtopic": "SFT Product Types",
@@ -3413,6 +4271,25 @@
       "answer": 0,
       "explanation": "For a firm without a large collateral operations team, triparty makes secured investing operationally feasible. The credit decision on the counterparty remains entirely its own.",
       "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q228",
+      "topic": "products",
+      "subtopic": "SFT Product Types",
+      "difficulty": 3,
+      "question": "Classic repo versus buy/sell-back: where does coupon income on the collateral show up?",
+      "options": [
+        "In a classic repo it is passed back as a manufactured payment; in a buy/sell-back it is priced into the forward repurchase price",
+        "In both cases it is retained by the buyer",
+        "In both cases it is paid to the triparty agent",
+        "In a classic repo it is priced into the forward; in a buy/sell-back it is passed back separately"
+      ],
+      "answer": 0,
+      "explanation": "The economics are the same, the cash flows are not. This is the practical reason buy/sell-back pricing looks different: income and the funding cost are bundled into one forward price rather than settled separately.",
+      "sources": [
+        "icma-gmra",
         "pretrained"
       ]
     },

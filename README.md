@@ -5,21 +5,21 @@ infrastructure — built as a static site with **no backend**. Questions and ans
 a single JSON file, everything else is vanilla HTML, CSS and JavaScript, and progress is
 kept in the browser's `localStorage`.
 
-**183 questions · 9 topics · 36 subtopics · 3 difficulty levels**
+**230 questions · 9 topics · 38 subtopics · 3 difficulty levels**
 
 ## Topics
 
 | Topic | Questions | Covers |
 |---|---:|---|
-| Repo Fundamentals | 18 | What a repo is, roles, legal and economic nature, accounting |
-| Pricing & Mechanics | 21 | Haircuts, margin ratios, repo rates, day counts, date conventions |
-| Collateral Management | 18 | Baskets, eligibility, triparty, substitution, re-use, optimisation |
-| SIX Repo & CO:RE | 40 | Contract types, baskets, currencies, cut-offs, fees, OTC spot market |
-| Swiss Market Infrastructure | 16 | Swiss Value Chain, SIX SIS, SIC, DvP settlement, SARON |
-| Central Banks & Monetary Policy | 18 | SNB operations, LSFF, standing facilities, transmission |
-| Regulation & Reporting | 18 | SFTR, Basel III, CSDR, GMRA, FinfraG |
+| Repo Fundamentals | 29 | What a repo is, roles, legal and economic nature, instruments, accounting |
+| Pricing & Mechanics | 28 | Haircuts, margin, repo rates, clean/dirty price, day counts, date conventions |
+| Collateral Management | 26 | Baskets, eligibility, triparty, allocation, substitution, re-use, optimisation |
+| SIX Repo & CO:RE | 46 | Trading model, contract types, baskets, currencies, cut-offs, fees, OTC spot market |
+| Swiss Market Infrastructure | 24 | Swiss Value Chain, SIX SIS, SIC, custody and post-trade, SARON |
+| Regulation & Reporting | 21 | SFTR, Basel III, CSDR, GMRA, FinfraG |
+| Central Banks & Monetary Policy | 19 | SNB operations, LSFF, standing facilities, transmission |
+| Products & Strategies | 19 | GC vs specials, SFT product types, trading strategies |
 | Risk & Lifecycle | 18 | Counterparty risk, default management, CCPs, lifecycle, operations |
-| Products & Strategies | 16 | GC vs specials, SFT product types, trading strategies |
 
 Difficulty is graded **Foundational (1) · Practitioner (2) · Advanced (3)**.
 
