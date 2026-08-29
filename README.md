@@ -34,8 +34,17 @@ Difficulty is graded **Foundational (1) · Practitioner (2) · Advanced (3)**.
 | **Sudden Death** | Keep going until the first wrong answer; best streak is remembered |
 | **Time Attack** | Three minutes, as many correct answers as possible |
 
-The home screen is just the mode list — pick one and go. Progress and sources sit behind
-quiet links at the bottom. After a round you can immediately replay the questions you missed.
+The home screen is just the mode list — pick one and go. A switch above it sets the
+difficulty level for **every** mode: *All levels* or *Foundational only*, the latter
+narrowing the pool to the 50 definition-level questions. The choice is remembered
+between visits and pre-selects the difficulty filter in the Topic Round setup.
+
+Sudden Death keeps a **separate record per level**, so an easier foundational streak
+never flatters the all-levels record. The Daily Challenge likewise draws a different
+set per level and tracks each one's result separately.
+
+Progress and sources sit behind quiet links at the bottom. After a round you can
+immediately replay the questions you missed.
 
 Every answer shows an explanation and cites its sources. Keyboard: <kbd>1</kbd>–<kbd>4</kbd>
 to answer, <kbd>Enter</kbd> to continue, <kbd>Esc</kbd> to end a round.

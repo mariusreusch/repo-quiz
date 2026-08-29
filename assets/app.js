@@ -7,13 +7,22 @@
 
 const STORE_KEY = "repoquiz.stats.v1";
 const THEME_KEY = "repoquiz.theme";
+const LEVEL_KEY = "repoquiz.level";
 const DIFF_NAME = { 1: "Foundational", 2: "Practitioner", 3: "Advanced" };
+
+/* Difficulty filter applied across every mode. Records are kept per level,
+   so a foundational streak never flatters the all-levels record. */
+const LEVELS = {
+  all:         { label: "All levels",       difficulties: null },
+  foundational:{ label: "Foundational only", difficulties: [1] }
+};
 
 /* ── game modes ──────────────────────────────────────── */
 const MODES = {
   quick: {
     icon: "⚡", name: "Quick Five",
     desc: "Five random questions, mixed difficulty",
+    descFoundational: "Five random questions from the basics",
     count: 5, feedback: "immediate"
   },
   sudden: {
@@ -55,6 +64,7 @@ const LEGACY_MODE_NAMES = { exam: "Exam Simulation", custom: "Custom Round" };
 const S = {
   data: null,
   byId: new Map(),
+  level: loadLevel(),
   stats: loadStats(),
   run: null,
   setup: null,
@@ -78,13 +88,34 @@ const el = (tag, props = {}, kids = []) => {
 };
 
 /* ── persistence ─────────────────────────────────────── */
+function emptyStats() {
+  return { questions: {}, runs: [], streaks: { all: 0, foundational: 0 }, daily: {} };
+}
 function loadStats() {
-  const empty = { questions: {}, runs: [], bestStreak: 0, daily: {} };
   try {
     const raw = localStorage.getItem(STORE_KEY);
-    return raw ? Object.assign(empty, JSON.parse(raw)) : empty;
-  } catch { return empty; }
+    if (!raw) return emptyStats();
+    const s = Object.assign(emptyStats(), JSON.parse(raw));
+    // migrate the single pre-level record into the all-levels category
+    if (!s.streaks || typeof s.streaks !== "object") s.streaks = { all: 0, foundational: 0 };
+    if (typeof s.bestStreak === "number" && !("all" in s.streaks)) s.streaks.all = s.bestStreak;
+    s.streaks.all = s.streaks.all || s.bestStreak || 0;
+    s.streaks.foundational = s.streaks.foundational || 0;
+    delete s.bestStreak;
+    return s;
+  } catch { return emptyStats(); }
 }
+function loadLevel() {
+  try { return LEVELS[localStorage.getItem(LEVEL_KEY)] ? localStorage.getItem(LEVEL_KEY) : "all"; }
+  catch { return "all"; }
+}
+function setLevel(next) {
+  S.level = next;
+  try { localStorage.setItem(LEVEL_KEY, next); } catch { /* private mode */ }
+}
+/* Difficulties the current level allows, or null for no restriction. */
+const levelDifficulties = () => LEVELS[S.level].difficulties;
+const bestStreak = () => S.stats.streaks[S.level] || 0;
 function saveStats() {
   try { localStorage.setItem(STORE_KEY, JSON.stringify(S.stats)); } catch { /* private mode */ }
 }
@@ -166,8 +197,15 @@ function applyTheme(t) {
 
 /* ── home ────────────────────────────────────────────── */
 function renderHome() {
-  const qs = S.data.questions;
+  const qs = inLevel(S.data.questions);
   const subtopicCount = new Set(qs.map(q => q.topic + "/" + q.subtopic)).size;
+
+  $("#level-switch").replaceChildren(...Object.entries(LEVELS).map(([key, l]) =>
+    el("button", {
+      class: "level-opt", type: "button", "aria-pressed": String(S.level === key),
+      onclick: () => { setLevel(key); renderHome(); }
+    }, [el("span", { text: l.label })])
+  ));
 
   $("#mode-list").replaceChildren(...Object.entries(MODES)
     .filter(([, m]) => !m.hidden)
@@ -177,23 +215,30 @@ function renderHome() {
       el("span", { class: "mode-icon", text: m.icon }),
       el("span", { class: "mode-body" }, [
         el("span", { class: "mode-name", text: m.name }),
-        el("span", { class: "mode-desc", text: m.desc })
+        el("span", { class: "mode-desc", text: (S.level !== "all" && m.descFoundational) || m.desc })
       ]),
       el("span", { class: "mode-meta", text: modeMeta(key) }),
       el("span", { class: "mode-go", "aria-hidden": "true", text: "›" })
     ])));
 
-  $("#home-meta").textContent =
-    `${qs.length} questions · ${S.data.topics.length} topics · ${subtopicCount} subtopics`;
+  $("#home-meta").textContent = S.level === "all"
+    ? `${qs.length} questions · ${S.data.topics.length} topics · ${subtopicCount} subtopics`
+    : `${qs.length} foundational questions of ${S.data.questions.length} · ${subtopicCount} subtopics`;
+}
+
+/* The questions the current level makes available. */
+function inLevel(list) {
+  const diffs = levelDifficulties();
+  return diffs ? list.filter(q => diffs.includes(q.difficulty)) : list;
 }
 
 /* Short status line on the right of each mode row — empty when there is nothing to say. */
 function modeMeta(key) {
   if (key === "daily") {
-    const d = S.stats.daily[todayKey()];
+    const d = S.stats.daily[dailyKey()];
     return d ? `${d.correct}/${d.total} today` : "";
   }
-  if (key === "sudden") return S.stats.bestStreak ? `best ${S.stats.bestStreak}` : "";
+  if (key === "sudden") return bestStreak() ? `best ${bestStreak()}` : "";
   if (key === "weak") {
     const n = weakPool().length;
     return n ? `${n} pending` : "";
@@ -201,9 +246,12 @@ function modeMeta(key) {
   return "";
 }
 
+/* Daily results are tracked per level: the two levels draw different sets. */
+const dailyKey = () => S.level === "all" ? todayKey() : `${todayKey()}:${S.level}`;
+
 /* ── question selection ──────────────────────────────── */
 function weakPool() {
-  return S.data.questions.filter(q => {
+  return inLevel(S.data.questions).filter(q => {
     const s = S.stats.questions[q.id];
     return s && s.seen > 0 && s.lastCorrect === false;
   });
@@ -213,12 +261,17 @@ function pickQuestions(mode, cfg = {}) {
   const m = MODES[mode];
   let pool = S.data.questions.slice();
 
-  if (cfg.topics?.length)      pool = pool.filter(q => cfg.topics.includes(q.topic));
-  if (cfg.subtopics?.length)   pool = pool.filter(q => cfg.subtopics.includes(q.subtopic));
-  if (cfg.difficulties?.length) pool = pool.filter(q => cfg.difficulties.includes(q.difficulty));
-  if (cfg.ids?.length)         pool = S.data.questions.filter(q => cfg.ids.includes(q.id));
+  if (cfg.topics?.length)    pool = pool.filter(q => cfg.topics.includes(q.topic));
+  if (cfg.subtopics?.length) pool = pool.filter(q => cfg.subtopics.includes(q.subtopic));
 
-  const rnd = m.seeded ? mulberry32(hashString(todayKey())) : Math.random;
+  // an explicit choice in the setup screen wins over the global level switch
+  const diffs = cfg.difficulties?.length ? cfg.difficulties : levelDifficulties();
+  if (diffs) pool = pool.filter(q => diffs.includes(q.difficulty));
+
+  // replaying specific questions ignores every filter
+  if (cfg.ids?.length) pool = S.data.questions.filter(q => cfg.ids.includes(q.id));
+
+  const rnd = m.seeded ? mulberry32(hashString(dailyKey())) : Math.random;
 
   if (m.pick === "weak") {
     const weak   = shuffle(weakPool(), rnd);
@@ -247,6 +300,7 @@ function startRun(mode, cfg) {
 
   S.run = {
     mode, cfg, questions,
+    level: S.level,
     idx: 0,
     answers: [],
     streak: 0,
@@ -285,6 +339,7 @@ function renderQuestion() {
   const m = MODES[r.mode];
 
   $("#quiz-mode").textContent = m.name;
+  $("#quiz-level").classList.toggle("hidden", S.level === "all");
   $("#quiz-counter").textContent = m.endless
     ? `Question ${r.idx + 1}`
     : `Question ${r.idx + 1} of ${r.questions.length}`;
@@ -335,7 +390,7 @@ function answer(pos) {
 
   if (correct) {
     r.streak++;
-    if (r.streak > S.stats.bestStreak) S.stats.bestStreak = r.streak;
+    if (r.streak > (S.stats.streaks[r.level] || 0)) S.stats.streaks[r.level] = r.streak;
   } else {
     r.streak = 0;
   }
@@ -400,7 +455,7 @@ function finishRun(reason) {
     durationMs: Date.now() - r.startedAt, reason
   });
   S.stats.runs = S.stats.runs.slice(0, 40);
-  if (MODES[r.mode].seeded) S.stats.daily[todayKey()] = { correct, total };
+  if (MODES[r.mode].seeded) S.stats.daily[dailyKey()] = { correct, total };
   saveStats();
 
   renderResult(reason);
@@ -422,10 +477,11 @@ function renderResult(reason) {
 
   let title, lede;
   if (reason === "streak-broken") {
+    const cat = LEVELS[r.level].label.toLowerCase();
     title = `Streak: ${correct}`;
-    lede = correct >= S.stats.bestStreak && correct > 0
-      ? "A new personal best. The run ended on the question shown below."
-      : `Your best streak so far is ${S.stats.bestStreak}. Review the miss below and go again.`;
+    lede = correct >= (S.stats.streaks[r.level] || 0) && correct > 0
+      ? `A new personal best for ${cat}. The run ended on the question shown below.`
+      : `Your best streak for ${cat} is ${S.stats.streaks[r.level] || 0}. Review the miss below and go again.`;
   } else if (reason === "time") {
     title = `Time up — ${correct} correct`;
     lede = `You answered ${total} question${total === 1 ? "" : "s"} in ${fmtClock(Date.now() - r.startedAt)}.`;
@@ -490,7 +546,7 @@ function bdRow(name, c, n) {
 
 /* ── setup screen ────────────────────────────────────── */
 function openSetup() {
-  S.setup = { topics: [], subtopics: [], difficulties: [], count: 10 };
+  S.setup = { topics: [], subtopics: [], difficulties: (levelDifficulties() || []).slice(), count: 10 };
   renderSetup();
   show("setup");
 }
@@ -556,12 +612,13 @@ function renderStats() {
   const seen = all.filter(s => s.seen > 0).length;
   const tries = all.reduce((n, s) => n + s.seen, 0);
   const right = all.reduce((n, s) => n + s.correct, 0);
-  const shaky = weakPool().length;
+  const shaky = S.data.questions.filter(q => S.stats.questions[q.id]?.lastCorrect === false).length;
 
   $("#stat-cards").replaceChildren(
     statCard(`${seen}`, `of ${S.data.questions.length} questions seen`),
     statCard(`${pct(right, tries)}%`, "lifetime accuracy"),
-    statCard(`${S.stats.bestStreak}`, "best sudden-death streak"),
+    statCard(`${S.stats.streaks.all}`, "best streak · all levels"),
+    statCard(`${S.stats.streaks.foundational}`, "best streak · foundational"),
     statCard(`${shaky}`, "questions currently shaky"),
     statCard(`${S.stats.runs.length}`, "rounds played")
   );
@@ -596,7 +653,7 @@ function renderStats() {
 
   $("#reset-stats").onclick = () => {
     if (!confirm("Delete all locally stored progress?")) return;
-    S.stats = { questions: {}, runs: [], bestStreak: 0, daily: {} };
+    S.stats = emptyStats();
     saveStats();
     renderStats();
   };
