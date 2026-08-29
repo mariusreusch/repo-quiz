@@ -5,21 +5,21 @@ infrastructure — built as a static site with **no backend**. Questions and ans
 a single JSON file, everything else is vanilla HTML, CSS and JavaScript, and progress is
 kept in the browser's `localStorage`.
 
-**230 questions · 9 topics · 38 subtopics · 3 difficulty levels**
+**250 questions · 9 topics · 38 subtopics · 3 difficulty levels**
 
 ## Topics
 
 | Topic | Questions | Covers |
 |---|---:|---|
-| Repo Fundamentals | 29 | What a repo is, roles, legal and economic nature, instruments, accounting |
-| Pricing & Mechanics | 28 | Haircuts, margin, repo rates, clean/dirty price, day counts, date conventions |
+| SIX Repo & CO:RE | 47 | Trading model, contract types, baskets, currencies, cut-offs, fees, OTC spot market |
+| Repo Fundamentals | 31 | What a repo is, roles, legal and economic nature, instruments, accounting |
+| Pricing & Mechanics | 31 | Haircuts, margin, repo rates, clean/dirty price, day counts, date conventions |
+| Regulation & Reporting | 27 | SFTR, Basel III, CSDR, GMRA, FinfraG |
 | Collateral Management | 26 | Baskets, eligibility, triparty, allocation, substitution, re-use, optimisation |
-| SIX Repo & CO:RE | 46 | Trading model, contract types, baskets, currencies, cut-offs, fees, OTC spot market |
-| Swiss Market Infrastructure | 24 | Swiss Value Chain, SIX SIS, SIC, custody and post-trade, SARON |
-| Regulation & Reporting | 21 | SFTR, Basel III, CSDR, GMRA, FinfraG |
-| Central Banks & Monetary Policy | 19 | SNB operations, LSFF, standing facilities, transmission |
-| Products & Strategies | 19 | GC vs specials, SFT product types, trading strategies |
-| Risk & Lifecycle | 18 | Counterparty risk, default management, CCPs, lifecycle, operations |
+| Swiss Market Infrastructure | 26 | Swiss Value Chain, SIX SIS, SIC, custody and post-trade, SARON |
+| Risk & Lifecycle | 22 | Counterparty risk, default management, CCPs, lifecycle, operations |
+| Central Banks & Monetary Policy | 20 | SNB operations, LSFF, standing facilities, transmission |
+| Products & Strategies | 20 | GC vs specials, SFT product types, trading strategies |
 
 Difficulty is graded **Foundational (1) · Practitioner (2) · Advanced (3)**.
 
@@ -36,7 +36,7 @@ Difficulty is graded **Foundational (1) · Practitioner (2) · Advanced (3)**.
 
 The home screen is just the mode list — pick one and go. A switch above it sets the
 difficulty level for **every** mode: *All levels* or *Foundational only*, the latter
-narrowing the pool to the 50 definition-level questions. The choice is remembered
+narrowing the pool to the 70 definition-level questions. The choice is remembered
 between visits and pre-selects the difficulty filter in the Topic Round setup.
 
 Sudden Death keeps a **separate record per level**, so an easier foundational streak

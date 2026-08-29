@@ -3,7 +3,7 @@
     "title": "Repo Trading Quiz",
     "subtitle": "Domain knowledge for the Swiss repo and collateral market",
     "version": "1.0.0",
-    "questionCount": 230,
+    "questionCount": 250,
     "disclaimer": "Study material, provided without warranty. Not legal, tax or investment advice. Market conventions, product specifications and regulation change - always check the primary source (SIX, SNB, ICMA, FINMA) before relying on anything here professionally."
   },
   "sources": {
@@ -492,6 +492,25 @@
       ]
     },
     {
+      "id": "q232",
+      "topic": "fundamentals",
+      "subtopic": "Income & Ownership",
+      "difficulty": 1,
+      "question": "What is a manufactured payment?",
+      "options": [
+        "The payment by which the collateral taker passes coupon or dividend income on the collateral back to the collateral giver",
+        "A payment that compensates for a late settlement",
+        "The interest paid on the cash amount at maturity",
+        "A fee charged by the triparty agent for handling income"
+      ],
+      "answer": 0,
+      "explanation": "The issuer pays whoever legally holds the security, which during a repo is the buyer. The manufactured payment restores the economics: income belongs to the seller, who gets the paper back.",
+      "sources": [
+        "pretrained",
+        "icma-gmra"
+      ]
+    },
+    {
       "id": "q012",
       "topic": "fundamentals",
       "subtopic": "Income & Ownership",
@@ -633,6 +652,25 @@
       "answer": 0,
       "explanation": "Collateral substantially reduces loss given default, so a lower risk premium is demanded than in the unsecured market.",
       "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q231",
+      "topic": "fundamentals",
+      "subtopic": "Legal & Economic Nature",
+      "difficulty": 1,
+      "question": "What does 'title transfer' mean in a repo?",
+      "options": [
+        "Full legal ownership of the securities passes to the buyer for the life of the trade",
+        "The securities are pledged to the buyer but stay owned by the seller",
+        "The securities are registered in the name of the triparty agent",
+        "Ownership is split between the two parties in proportion to the haircut"
+      ],
+      "answer": 0,
+      "explanation": "Title transfer is the legal foundation of the classic repo. Because the buyer really owns the paper, it can sell or reuse it, and in a default it liquidates its own asset instead of enforcing a pledge through the courts.",
+      "sources": [
+        "icma-gmra",
         "pretrained"
       ]
     },
@@ -947,6 +985,44 @@
       ]
     },
     {
+      "id": "q233",
+      "topic": "pricing",
+      "subtopic": "Margining",
+      "difficulty": 1,
+      "question": "What is variation margin?",
+      "options": [
+        "Collateral or cash moved during the life of a trade as the exposure changes with market prices",
+        "The over-collateralisation agreed at the start of the trade",
+        "The maximum amount by which a repo rate may vary",
+        "The fee charged for substituting collateral"
+      ],
+      "answer": 0,
+      "explanation": "Initial margin is set once at the outset; variation margin keeps the position covered day by day as prices move. A trade can be perfectly margined at inception and badly under-collateralised a week later without it.",
+      "sources": [
+        "pretrained",
+        "icma-gmra"
+      ]
+    },
+    {
+      "id": "q234",
+      "topic": "pricing",
+      "subtopic": "Margining",
+      "difficulty": 1,
+      "question": "A collateral agreement has a minimum transfer amount (MTA) of CHF 100,000. Today's revaluation shows an exposure change of CHF 40,000. What happens?",
+      "options": [
+        "Nothing moves — the change is below the MTA",
+        "CHF 40,000 is transferred as usual",
+        "CHF 100,000 is transferred, the agreed minimum",
+        "The trade is repriced"
+      ],
+      "answer": 0,
+      "explanation": "The MTA suppresses small movements so that operations are not spent settling trivial amounts. The uncovered exposure below the threshold is an accepted, deliberately small residual risk.",
+      "sources": [
+        "icma-gmra",
+        "pretrained"
+      ]
+    },
+    {
       "id": "q028",
       "topic": "pricing",
       "subtopic": "Margining",
@@ -1051,6 +1127,25 @@
       ],
       "answer": 0,
       "explanation": "The repo rate prices the money. Applying it to the collateral value is a common beginner's error and would give the wrong interest whenever a haircut applies.",
+      "sources": [
+        "six-repo-spec",
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q235",
+      "topic": "pricing",
+      "subtopic": "Repo Rate & Interest",
+      "difficulty": 1,
+      "question": "What is a basis point?",
+      "options": [
+        "One hundredth of a percentage point, i.e. 0.01%",
+        "One tenth of a percentage point, i.e. 0.1%",
+        "One percentage point",
+        "One thousandth of the notional amount"
+      ],
+      "answer": 0,
+      "explanation": "Money market spreads are small, so they are quoted in basis points: a repo rate offset of 5 bp is 0.05%. SIX Repo transaction fees are likewise quoted in basis points per annum.",
       "sources": [
         "six-repo-spec",
         "pretrained"
@@ -2430,6 +2525,25 @@
       ]
     },
     {
+      "id": "q250",
+      "topic": "sixplatform",
+      "subtopic": "OTC Spot Market",
+      "difficulty": 1,
+      "question": "What does OTC mean?",
+      "options": [
+        "Over the counter — traded bilaterally between two parties rather than on an exchange order book",
+        "Open trading contract — a contract without a fixed maturity",
+        "Official transfer of collateral",
+        "Overnight term contract"
+      ],
+      "answer": 0,
+      "explanation": "The SIX OTC spot market is where short-term Swiss Confederation and SNB paper is auctioned and traded bilaterally. Repo itself is an OTC product too, even when a platform such as CO:RE is used to negotiate it.",
+      "sources": [
+        "six-otc-spec",
+        "pretrained"
+      ]
+    },
+    {
       "id": "q093",
       "topic": "sixplatform",
       "subtopic": "OTC Spot Market",
@@ -2590,6 +2704,43 @@
       ],
       "answer": 0,
       "explanation": "Clearing establishes what is owed; settlement delivers it. Where a CCP clears, it also novates the trade and becomes counterparty to both sides.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q241",
+      "topic": "swissmarket",
+      "subtopic": "Custody & Post-Trade",
+      "difficulty": 1,
+      "question": "What does DvP stand for?",
+      "options": [
+        "Delivery versus payment",
+        "Deposit via participant",
+        "Dividend value protection",
+        "Daily valuation process"
+      ],
+      "answer": 0,
+      "explanation": "DvP links the two sides of a settlement so that neither can complete without the other. All CH Repo market and OTC spot market transactions on the SIX infrastructure settle on this basis.",
+      "sources": [
+        "six-repo-spec",
+        "six-otc-spec"
+      ]
+    },
+    {
+      "id": "q242",
+      "topic": "swissmarket",
+      "subtopic": "Custody & Post-Trade",
+      "difficulty": 1,
+      "question": "What does settlement finality mean?",
+      "options": [
+        "The transfer has become irrevocable and unconditional and can no longer be reversed",
+        "The trade has been confirmed by both counterparties",
+        "The settlement instruction has been accepted by the CSD",
+        "All margin obligations for the trade have been met"
+      ],
+      "answer": 0,
+      "explanation": "Finality is the moment risk actually ends. Until then a transfer could in principle be unwound — which is why finality in central bank money is the gold standard for the cash leg.",
       "sources": [
         "pretrained"
       ]
@@ -3267,6 +3418,25 @@
       ]
     },
     {
+      "id": "q243",
+      "topic": "centralbank",
+      "subtopic": "Standing Facilities",
+      "difficulty": 1,
+      "question": "What is a standing facility?",
+      "options": [
+        "A central bank facility permanently available for counterparties to use on their own initiative",
+        "A regular auction held by the central bank at fixed intervals",
+        "A permanent line of credit between two commercial banks",
+        "A facility for holding minimum reserves"
+      ],
+      "answer": 0,
+      "explanation": "The defining feature is who initiates: standing facilities are drawn at the counterparty's discretion, whereas open market operations happen when the central bank chooses. The SNB's liquidity shortage financing facility is an example.",
+      "sources": [
+        "snb",
+        "pretrained"
+      ]
+    },
+    {
       "id": "q129",
       "topic": "centralbank",
       "subtopic": "Standing Facilities",
@@ -3339,6 +3509,61 @@
       "sources": [
         "basel",
         "pretrained"
+      ]
+    },
+    {
+      "id": "q244",
+      "topic": "regulation",
+      "subtopic": "Basel III",
+      "difficulty": 1,
+      "question": "What does the liquidity coverage ratio (LCR) require a bank to hold?",
+      "options": [
+        "Enough high quality liquid assets to cover its net cash outflows over 30 days of stress",
+        "Enough capital to absorb losses over a one-year horizon",
+        "A fixed percentage of its deposits at the central bank",
+        "Collateral equal to the value of all its repo borrowings"
+      ],
+      "answer": 0,
+      "explanation": "The LCR is a survival test for a short, sharp crisis. It is the reason the quality of collateral posted in a repo matters so much: financing against Level 1 HQLA is treated as far more stable than financing against lower grade paper.",
+      "sources": [
+        "basel"
+      ]
+    },
+    {
+      "id": "q245",
+      "topic": "regulation",
+      "subtopic": "Basel III",
+      "difficulty": 1,
+      "question": "What time horizon does the net stable funding ratio (NSFR) apply?",
+      "options": [
+        "One year",
+        "30 days",
+        "Overnight",
+        "Five years"
+      ],
+      "answer": 0,
+      "explanation": "The two Basel liquidity metrics work on different clocks: the LCR asks whether you survive 30 days of stress, the NSFR whether your funding structure is sound over a year. Overnight repo funding of long assets is punished by the second, not the first.",
+      "sources": [
+        "basel"
+      ]
+    },
+    {
+      "id": "q246",
+      "topic": "regulation",
+      "subtopic": "Basel III",
+      "difficulty": 1,
+      "question": "What does HQLA stand for?",
+      "options": [
+        "High quality liquid assets",
+        "Highly qualified liquidity allocation",
+        "Hedged quoted liquid assets",
+        "Home quality lending assessment"
+      ],
+      "answer": 0,
+      "explanation": "HQLA are the assets a bank can reliably turn into cash in a stress, and they are the numerator of the LCR. Level 1 covers cash, central bank reserves and top-grade sovereign bonds; Level 2A and 2B admit lower grades with haircuts.",
+      "sources": [
+        "basel",
+        "six-repo-spec"
       ]
     },
     {
@@ -3473,6 +3698,24 @@
       ]
     },
     {
+      "id": "q247",
+      "topic": "regulation",
+      "subtopic": "Legal Framework",
+      "difficulty": 1,
+      "question": "What does GMRA stand for?",
+      "options": [
+        "Global Master Repurchase Agreement",
+        "General Market Regulation Act",
+        "Guaranteed Margin and Repo Arrangement",
+        "Global Money and Repo Association"
+      ],
+      "answer": 0,
+      "explanation": "The GMRA is published by ICMA and is the standard contract framework for repo internationally. Its derivatives counterpart is the ISDA Master Agreement.",
+      "sources": [
+        "icma-gmra"
+      ]
+    },
+    {
       "id": "q139",
       "topic": "regulation",
       "subtopic": "Legal Framework",
@@ -3584,6 +3827,42 @@
       "sources": [
         "sftr",
         "pretrained"
+      ]
+    },
+    {
+      "id": "q248",
+      "topic": "regulation",
+      "subtopic": "SFTR",
+      "difficulty": 1,
+      "question": "What does SFTR stand for?",
+      "options": [
+        "Securities Financing Transactions Regulation",
+        "Standard Financial Trade Reporting",
+        "Secured Funding and Treasury Rules",
+        "Settlement Finality and Transfer Regulation"
+      ],
+      "answer": 0,
+      "explanation": "An SFT is any transaction that uses securities to raise financing: repo, reverse repo, securities and commodities lending, buy/sell-backs and margin lending. SFTR makes all of them reportable.",
+      "sources": [
+        "sftr"
+      ]
+    },
+    {
+      "id": "q249",
+      "topic": "regulation",
+      "subtopic": "SFTR",
+      "difficulty": 1,
+      "question": "What is a trade repository?",
+      "options": [
+        "An entity that centrally collects and maintains the records of reported transactions",
+        "A bank's internal database of its own positions",
+        "The depository where the traded securities are held",
+        "The archive of master agreements signed with counterparties"
+      ],
+      "answer": 0,
+      "explanation": "Trade repositories are where SFTR reports land and where supervisors read them. Both counterparties report their own side, and the repository pairs the two using the shared UTI.",
+      "sources": [
+        "sftr"
       ]
     },
     {
@@ -3734,6 +4013,25 @@
       ]
     },
     {
+      "id": "q237",
+      "topic": "risk",
+      "subtopic": "Counterparty & Collateral Risk",
+      "difficulty": 1,
+      "question": "What is gap risk in a collateralised trade?",
+      "options": [
+        "The risk that the collateral loses more value than the haircut covers before it can be liquidated",
+        "The risk of a gap in the settlement calendar between two currencies",
+        "The risk that a counterparty stops answering margin calls",
+        "The risk that no eligible collateral is available for delivery"
+      ],
+      "answer": 0,
+      "explanation": "Gap risk is what is left after collateralisation. It is why haircuts are calibrated to the volatility and liquidation horizon of the asset rather than set at a flat rate.",
+      "sources": [
+        "pretrained",
+        "basel"
+      ]
+    },
+    {
       "id": "q151",
       "topic": "risk",
       "subtopic": "Counterparty & Collateral Risk",
@@ -3805,6 +4103,60 @@
       "sources": [
         "six-repo-spec",
         "icma-gmra"
+      ]
+    },
+    {
+      "id": "q238",
+      "topic": "risk",
+      "subtopic": "Default Management & CCP",
+      "difficulty": 1,
+      "question": "What does the abbreviation CCP stand for?",
+      "options": [
+        "Central counterparty",
+        "Central clearing platform",
+        "Collateral control provider",
+        "Cash collateral protocol"
+      ],
+      "answer": 0,
+      "explanation": "A central counterparty interposes itself between the two original parties, becoming buyer to every seller and seller to every buyer. Not to be confused with a CSD, which is the depository where securities settle.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q239",
+      "topic": "risk",
+      "subtopic": "Default Management & CCP",
+      "difficulty": 1,
+      "question": "What is novation?",
+      "options": [
+        "Replacing the original contract between two parties with two new contracts facing the CCP",
+        "Renewing a maturing repo on the same terms",
+        "Substituting one security for another during a trade",
+        "Transferring a trade to a different trading venue"
+      ],
+      "answer": 0,
+      "explanation": "Novation is the legal mechanism that makes central clearing work: after it, neither original party has any claim on the other — both face the CCP instead.",
+      "sources": [
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q240",
+      "topic": "risk",
+      "subtopic": "Default Management & CCP",
+      "difficulty": 1,
+      "question": "What is a CCP's default fund?",
+      "options": [
+        "A pool of contributions from clearing members, used if a defaulting member's own margin is not enough to cover the loss",
+        "The CCP's own equity capital",
+        "The collateral posted by the defaulting member",
+        "An insurance policy taken out by the CCP"
+      ],
+      "answer": 0,
+      "explanation": "The default fund is the mutualised layer of the waterfall. It is only reached after the defaulter's own margin and default fund contribution, and after the CCP's own skin in the game, are exhausted.",
+      "sources": [
+        "pretrained"
       ]
     },
     {
@@ -4064,6 +4416,24 @@
       "explanation": "In GC the cash lender is largely indifferent to which paper it receives out of the basket. Pricing therefore reflects the cost of money, not the scarcity of a bond.",
       "sources": [
         "six-repo-spec",
+        "pretrained"
+      ]
+    },
+    {
+      "id": "q236",
+      "topic": "products",
+      "subtopic": "GC vs Special",
+      "difficulty": 1,
+      "question": "What is 'specialness'?",
+      "options": [
+        "The difference between the GC repo rate and the lower repo rate of a security that is in high demand",
+        "The premium paid for collateral of unusually high credit quality",
+        "The extra haircut applied to an illiquid security",
+        "The spread between the bid and the offer in a repo quote"
+      ],
+      "answer": 0,
+      "explanation": "Specialness measures how badly the market wants one particular bond. The wider it is, the cheaper the holder of that bond can fund itself — which is why owning a special is worth real money.",
+      "sources": [
         "pretrained"
       ]
     },
