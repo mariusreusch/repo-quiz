@@ -16,21 +16,6 @@ const MODES = {
     desc: "Five random questions, mixed difficulty",
     count: 5, feedback: "immediate"
   },
-  topic: {
-    icon: "◆", name: "Topic Round",
-    desc: "Drill one topic or subtopic",
-    setup: true
-  },
-  weak: {
-    icon: "◎", name: "Weak Spots",
-    desc: "What you last got wrong, plus what you have not seen",
-    count: 15, feedback: "immediate", pick: "weak"
-  },
-  daily: {
-    icon: "◷", name: "Daily Challenge",
-    desc: "Ten questions, the same set all day",
-    count: 10, feedback: "immediate", seeded: true
-  },
   sudden: {
     icon: "☠", name: "Sudden Death",
     desc: "Keep going until the first wrong answer",
@@ -40,6 +25,21 @@ const MODES = {
     icon: "⏱", name: "Time Attack",
     desc: "As many as you can in three minutes",
     endless: true, seconds: 180, feedback: "immediate"
+  },
+  daily: {
+    icon: "◷", name: "Daily Challenge",
+    desc: "Ten questions, the same set all day",
+    count: 10, feedback: "immediate", seeded: true
+  },
+  weak: {
+    icon: "◎", name: "Weak Spots",
+    desc: "What you last got wrong, plus what you have not seen",
+    count: 15, feedback: "immediate", pick: "weak"
+  },
+  topic: {
+    icon: "◆", name: "Topic Round",
+    desc: "Drill one topic or subtopic",
+    setup: true
   },
   review: {
     icon: "↻", name: "Review Round",
